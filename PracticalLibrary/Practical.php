@@ -1,29 +1,33 @@
 <?php
 //------------------------------------------------------------------------------------------------------------------
-    include_once 'Caller.php';
+    include_once 'Array.php';
+    include_once 'File.php';
+    include_once 'Number.php';
+    include_once 'Object.php';
+    include_once 'String.php';
 //------------------------------------------------------------------------------------------------------------------
 	function _Array($Data)
 	{
-		return CALLER::CallerArray($Data);
+		return _ARRAY::_Set($Data);
 	}
 //------------------------------------------------------------------------------------------------------------------
 	function _File($Data)
 	{
-		return CALLER::CallerFile($Data);
+		return _FILE::_Set($Data);
 	}
 //------------------------------------------------------------------------------------------------------------------
 	function _String($Data)
 	{
-		return CALLER::CallerString($Data);
+		return _STRING::_Set($Data);
 	}
 //------------------------------------------------------------------------------------------------------------------
 	function _Number($Data)
 	{
-		return CALLER::CallerNumber($Data);
+		return _NUMBER::_Set($Data);
 	}
 //------------------------------------------------------------------------------------------------------------------
 	function _Object($Data)
 	{
-		return CALLER::CallerObject($Data);
+		return _OBJECT::_Set($Data);
 	}
 //------------------------------------------------------------------------------------------------------------------
