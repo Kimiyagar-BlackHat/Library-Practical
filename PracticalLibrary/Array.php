@@ -59,12 +59,16 @@
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         public function CountDimensions()
         {
-        	if($this->_Check())
-            	foreach ($this->InputData as $Key => $Value) 
-            		if(is_array($Value))
-            			return 2;
-            		else
-            			return 1;
+            if(!$this->IsArray())
+                return 0;
+            $Count = 0;
+            foreach ($this->InputData as $Key => $Value)
+            {
+                $this->__construct($Value);
+                if ($this->IsArray())
+                    $Count = max($Count , $this->CountDimensions());
+            }
+            return $Count+1;
         }
 //------------------------------------------------------------------------------------------------------------------
         public function JsonDecode()
