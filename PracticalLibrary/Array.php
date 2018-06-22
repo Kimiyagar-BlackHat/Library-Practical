@@ -2,13 +2,13 @@
 	class _ARRAY
 	{
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%        
-        public $InputData;
+        private static $InputData;
         private static $Instance;
 //------------------------------------------------------------------------------------------------------------------    
         private function __construct($Data)
         {
-            $this->InputData = $Data;
-            return $this->InputData;
+            self::$InputData = $Data;
+            return self::$InputData;
         }
 //------------------------------------------------------------------------------------------------------------------            
         public static function _Set($Data)
@@ -18,82 +18,82 @@
             return self::$Instance;
         }        
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		public function _Get()
+		public static function _Get()
 		{
-		    if($this->_Check() && $this->_IsSet())	
-		    	return $this->InputData;
+		    if(self::_Check() && self::_IsSet())	
+		    	return self::$InputData;
             return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------		
-		public function _Check()
+		public static function _Check()
 		{
-			if($this->IsArray())							
+			if(self::IsArray())							
 				return TRUE;
 			return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------
-		public function _Empty()
+		public static function _Empty()
 		{
-			if($this->_Check() && $this->_IsFull())	
+			if(self::_Check() && self::_IsFull())	
 				return array();
             return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------		
-		public function _IsSet()
+		public static function _IsSet()
 		{
-			if(isset($this->InputData) && $this->_IsFull())			
+			if(isset(self::$InputData) && self::_IsFull())			
 				return TRUE;
             return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------
-		public function _IsEmpty()
+		public static function _IsEmpty()
 		{
-			if(empty($this->InputData))									
+			if(empty(self::$InputData))									
 				return TRUE;
             return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------
-		public function _IsFull()
+		public static function _IsFull()
 		{
-			if(!$this->_IsEmpty())							
+			if(!self::_IsEmpty())							
 				return TRUE;
             return FALSE;
 		}
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        public function IsArray()
+        public static function IsArray()
         {
-            if(is_array($this->InputData))	
+            if(is_array(self::$InputData))	
             	return TRUE;
             return FALSE;
         }
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        public function CountDimensions()
+        public static function CountDimensions()
         {
-            if(!$this->IsArray())
+            if(!self::IsArray())
                 return 0;
             $Count = 0;
-            foreach ($this->InputData as $Key => $Value)
+            foreach (self::$InputData as $Key => $Value)
             {
-                $this->__construct($Value);
-                if ($this->IsArray())
-                    $Count = max($Count , $this->CountDimensions());
+                new self($Value);
+                if (self::IsArray())
+                    $Count = max($Count , self::CountDimensions());
             }
             return $Count+1;
         }
 //------------------------------------------------------------------------------------------------------------------
-        public function JsonDecode()
+        public static function JsonDecode()
         {
             $Output = array();
-            if($this->_IsFull())
-                $Output = json_decode($this->InputData , TRUE);
+            if(self::_IsFull())
+                $Output = json_decode(self::$InputData , TRUE);
             return $Output;
         }
 //------------------------------------------------------------------------------------------------------------------
-        public function JsonEncode()
+        public static function JsonEncode()
         {
             $Output = array();
-            if($this->_IsFull())
-                $Output = json_encode($this->InputData , TRUE);
+            if(self::_IsFull())
+                $Output = json_encode(self::$InputData , TRUE);
             return $Output;
         }
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

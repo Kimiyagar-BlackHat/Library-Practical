@@ -2,13 +2,13 @@
 	class _OBJECT
 	{
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%        
-        public $InputData;
+        private static $InputData;
         private static $Instance;
 //------------------------------------------------------------------------------------------------------------------    
         private function __construct($Data)
         {
-            $this->InputData = $Data;
-            return $this->InputData;
+            self::$InputData = $Data;
+            return self::$InputData;
         }
 //------------------------------------------------------------------------------------------------------------------            
         public static function _Set($Data)
@@ -18,51 +18,51 @@
             return self::$Instance;
         }        
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		public function _Get()
+		public static function _Get()
 		{
-		    if($this->_Check() && $this->_IsSet())
-		        return $this->InputData;
+		    if(self::_Check() && self::_IsSet())
+		        return self::$InputData;
             return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------		
-		public function _Check()
+		public static function _Check()
 		{
-			if($this->IsObject())
+			if(self::IsObject())
 			    return TRUE;
             return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------
-		public function _Empty()
+		public static function _Empty()
 		{
-			if($this->_Check() && $this->_IsFull())
+			if(self::_Check() && self::_IsFull())
 			    return NULL;
             return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------		
-		public function _IsSet()
+		public static function _IsSet()
 		{
-			if(isset($this->InputData) && $this->_IsFull())
+			if(isset(self::$InputData) && self::_IsFull())
 			    return TRUE;
             return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------
-		public function _IsEmpty()
+		public static function _IsEmpty()
 		{
-			if(empty((array)$this->InputData))
+			if(empty((array)self::$InputData))
 			    return TRUE;
             return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------
-		public function _IsFull()
+		public static function _IsFull()
 		{
-			if(!$this->_IsEmpty())
+			if(!self::_IsEmpty())
 			    return TRUE;
             return FALSE;
 		}
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        public function IsObject()
+        public static function IsObject()
         {
-            if(is_object($this->InputData))
+            if(is_object(self::$InputData))
                 return TRUE;
             return FALSE;
         }

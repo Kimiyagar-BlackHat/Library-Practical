@@ -2,13 +2,13 @@
 	class _FILE
 	{
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%        
-        public $InputData;
+        private static $InputData;
         private static $Instance;
 //------------------------------------------------------------------------------------------------------------------    
         private function __construct($Data)
         {
-            $this->InputData = $Data;
-            return $this->InputData;
+            self::$InputData = $Data;
+            return self::$InputData;
         }
 //------------------------------------------------------------------------------------------------------------------            
         public static function _Set($Data)
@@ -18,32 +18,32 @@
             return self::$Instance;
         }        
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		public function _Get()
+		public static function _Get()
 		{
-		    if($this->_Check() && $this->_IsSet())	
-                return $this->InputData;
+		    if(self::_Check() && self::_IsSet())	
+                return self::$InputData;
             return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------
-		public function _Check()
+		public static function _Check()
 		{
-			if(	$this->IsDir() 			||
-				$this->IsExecutable() 	||
-				$this->IsLink() 		||
-				$this->IsFile() 		||
-				$this->IsReadable() 	||
-				$this->IsWritable() 	||
-				$this->IsUploadedFile()
+			if(	self::IsDir() 			||
+				self::IsExecutable() 	||
+				self::IsLink() 		    ||
+				self::IsFile() 		    ||
+				self::IsReadable() 	    ||
+				self::IsWritable() 	    ||
+				self::IsUploadedFile()
             )
             return TRUE;
 			return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------
-		public function _Empty()
+		public static function _Empty()
 		{
-			if($this->_Check() && $this->_IsFull())
+			if(self::_Check() && self::_IsFull())
             {
-            	$Write = $this->WriteFile('w' , '');
+            	$Write = self::WriteFile('w' , '');
             	if($Write)
                     return TRUE;
             	else
@@ -52,81 +52,81 @@
             return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------		
-		public function _IsSet()
+		public static function _IsSet()
 		{
-			if(isset($this->InputData) && $this->_IsFull())
+			if(isset(self::$InputData) && self::_IsFull())
                 return TRUE;
             return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------
-		public function _IsEmpty()
+		public static function _IsEmpty()
 		{
 			clearstatcache();
-			if(!filesize($this->InputData))								
+			if(!filesize(self::$InputData))								
                 return TRUE;
             return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------
-		public function _IsFull()
+		public static function _IsFull()
 		{
-			if(!$this->_IsEmpty())							
+			if(!self::_IsEmpty())							
                 return TRUE;
             return FALSE;
 		}
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		public function IsDir()
+		public static function IsDir()
         {
-            if(is_dir($this->InputData)) 									
+            if(is_dir(self::$InputData)) 									
                 return TRUE;
             return FALSE;
         }
 //------------------------------------------------------------------------------------------------------------------
-        public function IsExecutable()
+        public static function IsExecutable()
         {
-            if(is_executable($this->InputData)) 							
+            if(is_executable(self::$InputData)) 							
                 return TRUE;
             return FALSE;
         }        
 //------------------------------------------------------------------------------------------------------------------
-        public function IsLink()
+        public static function IsLink()
         {
-            if(is_link($this->InputData)) 									
+            if(is_link(self::$InputData)) 									
                 return TRUE;
             return FALSE;
         }        
 //------------------------------------------------------------------------------------------------------------------
-        public function IsFile()
+        public static function IsFile()
         {
-            if(is_file($this->InputData)) 									
+            if(is_file(self::$InputData)) 									
                 return TRUE;
             return FALSE;
         }        
 //------------------------------------------------------------------------------------------------------------------
-        public function IsReadable()
+        public static function IsReadable()
         {
-            if(is_readable($this->InputData)) 								
+            if(is_readable(self::$InputData)) 								
                 return TRUE;
             return FALSE;
         }        
 //------------------------------------------------------------------------------------------------------------------
-        public function IsWritable()
+        public static function IsWritable()
         {
-            if(is_writable($this->InputData)) 								
+            if(is_writable(self::$InputData)) 								
                 return TRUE;
             return FALSE;
         }        
 //------------------------------------------------------------------------------------------------------------------
-        public function IsUploadedFile()
+        public static function IsUploadedFile()
         {
-            if(is_uploaded_file($this->InputData))							
+            if(is_uploaded_file(self::$InputData))							
                 return TRUE;
 			return FALSE;
         }        
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        public function WriteFile($Method , $String)
+        public static function WriteFile($Method , $String)
         {
             global $Write , $Close;
-        	$Open = $this->OpenFile($Method);
+        	$Open = self::OpenFile($Method);
         	if($Open)
 			{
 				$Write = fwrite($Open , $String);
@@ -136,18 +136,18 @@
 			return FALSE;
         }
 //------------------------------------------------------------------------------------------------------------------
-        public function OpenFile($Method)
+        public static function OpenFile($Method)
         {
-        	if($this->IsWritable() && $this->IsReadable())
+        	if(self::IsWritable() && self::IsReadable())
         	{
-        		return fopen($this->InputData, $Method);
+        		return fopen(self::$InputData, $Method);
         	}
         	return FALSE;
         }
 //------------------------------------------------------------------------------------------------------------------
-       	public function CloseFile()
+       	public static function CloseFile()
        	{
-       		return fclose($this->InputData);
+       		return fclose(self::$InputData);
        	}
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	}

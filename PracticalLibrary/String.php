@@ -2,13 +2,13 @@
 	class _STRING
 	{
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%        
-        public $InputData;
+        private static $InputData;
         private static $Instance;
 //------------------------------------------------------------------------------------------------------------------    
         private function __construct($Data)
         {
-            $this->InputData = $Data;
-            return $this->InputData;
+            self::$InputData = $Data;
+            return self::$InputData;
         }
 //------------------------------------------------------------------------------------------------------------------            
         public static function _Set($Data)
@@ -18,82 +18,82 @@
             return self::$Instance;
         }        
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		public function _Get()
+		public static function _Get()
 		{
-		    if($this->_Check() && $this->_IsSet())
-		        return $this->InputData;
+		    if(self::_Check() && self::_IsSet())
+		        return self::$InputData;
             return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------		
-		public function _Check()
+		public static function _Check()
 		{
-			if($this->IsString())
+			if(self::IsString())
 			    return TRUE;
             return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------
-		public function _Empty()
+		public static function _Empty()
 		{
-			if($this->_Check() && $this->_IsFull())
+			if(self::_Check() && self::_IsFull())
 			    return '';
             return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------		
-		public function _IsSet()
+		public static function _IsSet()
 		{
-			if(isset($this->InputData) && $this->_IsFull())
+			if(isset(self::$InputData) && self::_IsFull())
 			    return TRUE;
             return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------
-		public function _IsEmpty()
+		public static function _IsEmpty()
 		{
-			if($this->InputData == NULL || $this->InputData == '')
+			if(self::$InputData == NULL || self::$InputData == '')
 			    return TRUE;
             return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------
-		public function _IsFull()
+		public static function _IsFull()
 		{
-			if(!$this->_IsEmpty())
+			if(!self::_IsEmpty())
 			    return TRUE;
             return FALSE;
 		}
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        public function IsString()
+        public static function IsString()
         {
-            if(is_string($this->InputData))
+            if(is_string(self::$InputData))
                 return TRUE;
             return FALSE;
         }
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    	public function ToUpper()
+    	public static function ToUpper()
     	{
-        	if($this->_Check() && $this->_IsFull())
-            	return strtoupper($this->InputData);
+        	if(self::_Check() && self::_IsFull())
+            	return strtoupper(self::$InputData);
         	return NULL;
     	}
 //------------------------------------------------------------------------------------------------------------------
-    	public function ToLower()
+    	public static function ToLower()
     	{
-        	if($this->_Check() && $this->_IsFull())
-            	return strtolower($this->InputData);
+        	if(self::_Check() && self::_IsFull())
+            	return strtolower(self::$InputData);
         	return NULL;
     	}    	
 //------------------------------------------------------------------------------------------------------------------
-        public function CropLeft($Removable)
+        public static function CropLeft($Removable)
         {
-            if($this->_Check())
-                return ltrim($this->InputData , $Removable);
+            if(self::_Check())
+                return ltrim(self::$InputData , $Removable);
             return NULL;
         }   	
 //------------------------------------------------------------------------------------------------------------------
-        public function CropRight($Removable)
+        public static function CropRight($Removable)
         {
-            if($this->_Check())
-                return rtrim($this->InputData , $Removable);
+            if(self::_Check())
+                return rtrim(self::$InputData , $Removable);
             return NULL;
-        }            
+        }
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	}
 //------------------------------------------------------------------------------------------------------------------

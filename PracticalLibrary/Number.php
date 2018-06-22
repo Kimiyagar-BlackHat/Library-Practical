@@ -2,13 +2,13 @@
 	class _NUMBER
 	{
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%        
-        public $InputData;
+        private static $InputData;
         private static $Instance;
 //------------------------------------------------------------------------------------------------------------------    
         private function __construct($Data)
         {
-            $this->InputData = $Data;
-            return $this->InputData;
+            self::$InputData = $Data;
+            return self::$InputData;
         }
 //------------------------------------------------------------------------------------------------------------------            
         public static function _Set($Data)
@@ -18,98 +18,98 @@
             return self::$Instance;
         }        
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		public function _Get()
+		public static function _Get()
 		{
-		    if($this->_Check() && $this->_IsSet())
-		    	return $this->InputData;
+		    if(self::_Check() && self::_IsSet())
+		    	return self::$InputData;
             return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------		
-		public function _Check()
+		public static function _Check()
 		{
-			if(	$this->IsInteger() 	||
-				$this->IsDouble() 	||
-				$this->IsFloat() 	||
-				$this->IsLong() 	||
-				$this->IsNumeric()
+			if(	self::IsInteger() 	||
+				self::IsDouble() 	||
+				self::IsFloat() 	||
+				self::IsLong()  	||
+				self::IsNumeric()
 			)
             return TRUE;
             return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------
-		public function _Empty()
+		public static function _Empty()
 		{
-			if($this->_Check() && $this->_IsFull())
+			if(self::_Check() && self::_IsFull())
 			    return NULL;
             return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------		
-		public function _IsSet()
+		public static function _IsSet()
 		{
-			if(isset($this->InputData) && $this->_IsFull())
+			if(isset(self::$InputData) && self::_IsFull())
 			    return TRUE;
             return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------
-		public function _IsEmpty()
+		public static function _IsEmpty()
 		{
-			if($this->InputData == NULL || $this->InputData == '')
+			if(self::$InputData == NULL || self::$InputData == '')
 			    return TRUE;
             return FALSE;
 		}
 //------------------------------------------------------------------------------------------------------------------
-		public function _IsFull()
+		public static function _IsFull()
 		{
-			if(!$this->_IsEmpty())
+			if(!self::_IsEmpty())
 			    return TRUE;
             return FALSE;
 		}
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        public function IsInteger()
+        public static function IsInteger()
         {
-            if(is_integer($this->InputData) && is_int($this->InputData))
+            if(is_integer(self::$InputData) && is_int(self::$InputData))
                 return TRUE;
             return FALSE;
         }
 //------------------------------------------------------------------------------------------------------------------
-        public function IsDouble()
+        public static function IsDouble()
         {
-            if(is_double($this->InputData))
+            if(is_double(self::$InputData))
                 return TRUE;
             return FALSE;
         }        
 //------------------------------------------------------------------------------------------------------------------
-        public function IsFloat()
+        public static function IsFloat()
         {
-            if(is_float($this->InputData))
+            if(is_float(self::$InputData))
                 return TRUE;
             return FALSE;
         }      
 //------------------------------------------------------------------------------------------------------------------
-        public function IsLong()
+        public static function IsLong()
         {
-            if(is_long($this->InputData))
+            if(is_long(self::$InputData))
                 return TRUE;
             return FALSE;
         }
 //------------------------------------------------------------------------------------------------------------------        
-        public function IsNumeric()
+        public static function IsNumeric()
         {
-            if(is_numeric($this->InputData) && !is_nan($this->InputData))
+            if(is_numeric(self::$InputData) && !is_nan(self::$InputData))
                 return TRUE;
             return FALSE;
         }
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	    public function IsEven()
+	    public static function IsEven()
 	    {
-	        if($this->_Check() && $$this->InputData%2 == 0)
+	        if(self::_Check() && self::$InputData%2 == 0)
 	            return TRUE;
 			return FALSE;
 	    }
 //------------------------------------------------------------------------------------------------------------------
-	    public function IsOdd()
+	    public static function IsOdd()
 	    {
-	        if($this->_Check() && $$this->InputData%2 != 0)
+	        if(self::_Check() && self::$InputData%2 != 0)
 	            return TRUE;
 			return FALSE;
 	    }     
